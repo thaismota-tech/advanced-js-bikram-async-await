@@ -16,6 +16,7 @@ getRandomPokemon().then(data => {
     console.log(`Tu Pokémon aleatorio es: ${data.name}`);
 });
 
+
 //2 - Declara una funcion getImageAndName que retorne el nombre y la URL de la imagen de un pokemon => (return {img, name})
 async function getImageAndName(pokemonNameOrId) {
     try {
@@ -35,3 +36,26 @@ async function getImageAndName(pokemonNameOrId) {
 getImageAndName('pikachu').then(pokemon => {
     console.log(pokemon);
 });
+
+
+//3 - Declara una funcion printImageAndName ...
+async function printImageAndName(pokemonNameOrId) {
+    try {
+        const pokemon = await getImageAndName(pokemonNameOrId);
+        if (pokemon) {
+            return `<section>
+    <img src="${pokemon.img}" alt="${pokemon.name}">
+    <h1>Nombre del pokemon:${pokemon.name}</h1></section>`;
+        }
+        return '';
+    } catch (error) {
+        return '';
+    }
+}
+async function pintarPokemon() {
+    const htmlContent = await printImageAndName('charizard');
+    if (htmlContent) {
+        document.body.insertAdjacentHTML('beforeend', htmlContent);
+    }
+}
+pintarPokemon();
