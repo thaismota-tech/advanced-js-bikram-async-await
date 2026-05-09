@@ -15,3 +15,23 @@ async function getRandomPokemon() {
 getRandomPokemon().then(data => {
     console.log(`Tu Pokémon aleatorio es: ${data.name}`);
 });
+
+//2 - Declara una funcion getImageAndName que retorne el nombre y la URL de la imagen de un pokemon => (return {img, name})
+async function getImageAndName(pokemonNameOrId) {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNameOrId}`);
+        if (!response.ok) {
+            throw new Error("Pokémon no encontrado");
+        }
+        const data = await response.json();
+        return {
+            name: data.name,
+            img: data.sprites.front_default
+        };
+    } catch (error) {
+        console.error("Error al obtener los datos:", error);
+    }
+}
+getImageAndName('pikachu').then(pokemon => {
+    console.log(pokemon);
+});
